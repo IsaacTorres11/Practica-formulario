@@ -21,6 +21,10 @@ const Formulario =()=>{
         console.log(descripcion)
         console.log(validacion)
         
+        if(validacion == false){
+            alert('debes ser mayor de edad')
+        }
+        
     }
 
 
@@ -28,6 +32,7 @@ const Formulario =()=>{
     const handleChange = e=>{
         //destructuracion del evento 
         const {name, checked, value, type} = e.target
+        
         setFormulario({
             ...formulario,
             [name] : type === 'checkbox'
