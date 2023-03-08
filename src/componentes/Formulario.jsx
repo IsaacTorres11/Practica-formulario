@@ -7,11 +7,12 @@ const Formulario =()=>{
         nombre: '',
         apellido: '',
         descripcion: '',
+        estado: 'Completado',
         validacion: true
     })
 
     //Destructuracion de formulario
-    const {nombre, apellido, descripcion, validacion} = formulario
+    const {nombre, apellido, descripcion, estado ,validacion} = formulario
     
     //Se genera la funcion para enviar el formulario
     const enviar =(e)=>{
@@ -19,6 +20,7 @@ const Formulario =()=>{
         console.log(nombre)
         console.log(apellido)
         console.log(descripcion)
+        console.log(estado)
         console.log(validacion)
         
         if(validacion == false){
@@ -46,23 +48,31 @@ const Formulario =()=>{
             <form onSubmit={enviar}>
 
                 <input type="text" 
+                className="container mt-2"
                 placeholder="Ingresa tu nombre"
                 name= 'nombre'
                 value = {formulario.nombre}
                 onChange ={handleChange}/>
 
                 <input type="text"
+                className="container mt-2"
                 placeholder="Ingresa tu apellido"
                 name='apellido' 
                 value={formulario.apellido}
                 onChange ={handleChange}
                 />
 
-                <input type="textarea" 
+                <textarea type="text" 
+                className="container mt-2"
                 placeholder="Haz una descripcion de ti"
                 name="descripcion"
                 value={formulario.descripcion}
                 onChange ={handleChange}/>
+
+                <select name="estado"  value={estado} className="form-control mb-2" onChange ={handleChange}>
+                    <option value="Completado">Completado</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
 
                 <div>
                     <input type="checkbox" 
@@ -74,7 +84,7 @@ const Formulario =()=>{
                     <label htmlFor="inputCheck">Eres Mayor de Edad</label>
                 </div>
 
-                <button> Enviar</button>
+                <button className="btn btn-primary"> Enviar</button>
             </form>
         </>
     )
