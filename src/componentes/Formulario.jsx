@@ -1,32 +1,48 @@
 import { useState } from "react"
+import Swal from "sweetalert2"
 
-const Formulario =()=>{
+
+const Formulario =({addTodo})=>{
 
     //Se crea el estado formulario
-    const [formulario, setFormulario] = useState({
-        nombre: '',
-        apellido: '',
+    const [todo, setTodo] = useState({
+        tarea: '',
         descripcion: '',
         estado: 'Completado',
-        validacion: true
+        prioridad: true
     })
 
     //Destructuracion de formulario
-    const {nombre, apellido, descripcion, estado ,validacion} = formulario
+    const {tarea, descripcion, estado ,prioridad} = todo
     
     //Se genera la funcion para enviar el formulario
     const enviar =(e)=>{
         e.preventDefault()
-        console.log(nombre)
-        console.log(apellido)
-        console.log(descripcion)
-        console.log(estado)
-        console.log(validacion)
         
-        if(validacion == false){
-            alert('debes ser mayor de edad')
+        if( !tarea.trim()  || !descripcion.trim() ){
+            //Agregamos un mensaje con sweetalert2 
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'La tarea y Descripcion son obligatorios',
+              })
+              //este return se pone para que el codigo no avance en caso de que los campos tarea y descripcion esten con espacions en blanco   
         }
-        
+
+        addTodo({
+            id: Date.now(),
+            ...todo,
+            estado : estado ==='Completaado'
+        })
+
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Agregaste la tarea de forma correcta',
+            showConfirmButton: false,
+            timer: 1000
+          })
+
     }
 
 
@@ -35,8 +51,8 @@ const Formulario =()=>{
         //destructuracion del evento 
         const {name, checked, value, type} = e.target
         
-        setFormulario({
-            ...formulario,
+        setTodo({
+            ...todo,
             [name] : type === 'checkbox'
             ? checked
             : value
@@ -49,24 +65,16 @@ const Formulario =()=>{
 
                 <input type="text" 
                 className="container mt-2"
-                placeholder="Ingresa tu nombre"
-                name= 'nombre'
-                value = {formulario.nombre}
+                placeholder="Ingresa la tarea"
+                name= 'tarea'
+                value = {tarea}
                 onChange ={handleChange}/>
-
-                <input type="text"
-                className="container mt-2"
-                placeholder="Ingresa tu apellido"
-                name='apellido' 
-                value={formulario.apellido}
-                onChange ={handleChange}
-                />
 
                 <textarea type="text" 
                 className="container mt-2"
-                placeholder="Haz una descripcion de ti"
+                placeholder="Describe la tarea"
                 name="descripcion"
-                value={formulario.descripcion}
+                value={descripcion}
                 onChange ={handleChange}/>
 
                 <select name="estado"  value={estado} className="form-control mb-2" onChange ={handleChange}>
@@ -76,15 +84,15 @@ const Formulario =()=>{
 
                 <div>
                     <input type="checkbox" 
-                    name='validacion'
+                    name='prioridad'
                     id="inputCheck"
-                    checked={formulario.validacion}
+                    checked={prioridad}
                     onChange ={handleChange}/>
 
-                    <label htmlFor="inputCheck">Eres Mayor de Edad</label>
+                    <label htmlFor="inputCheck">Dar Prioridad</label>
                 </div>
 
-                <button className="btn btn-primary"> Enviar</button>
+                <button className="btn btn-primary"> Agregar Tarea </button>
             </form>
         </>
     )
