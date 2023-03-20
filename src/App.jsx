@@ -68,11 +68,27 @@ function App() {
     setTodos(newArray)
   }
 
+
+  //Funcion para ordernar los todos por prioridad
+  const orderTodo =(arrayTodos)=>{
+      return arrayTodos.sort((a,b)=>{
+        // con cero indicamos que no cambiara el orden 
+        if (a.prioridad === b.prioridad) return 0
+        // si a.prioridad es verdadero retornamos -1, con -1 indicamos que tiene mayor prioridad
+        if (a.prioridad)  return -1
+        // // si a.prioridad es falso retornamos 1, con 1 indicamos que tiene menor prioridad 
+        if (!a.prioridad) return 1
+      })
+  }
+
+
   return (
     <div className="container mb-2">
       <h1 className="my-5">Formularios</h1>
       <Formulario addTodo ={addTodo} />
-      <Todos  todos = {todos} deleteTodo ={deleteTodo} updateTodo ={updateTodo}/>
+      {/* pasamos la funcion orderTodo como propiedad al componente Todos y lo ejecutamos al momento de que este 
+      componente se renderice y le pasamos como parametro de la funcion el todo */}
+      <Todos  todos = {orderTodo(todos)} deleteTodo ={deleteTodo} updateTodo ={updateTodo}/>
     </div>
   )
 }
