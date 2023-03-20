@@ -71,6 +71,7 @@ function App() {
 
   //Funcion para ordernar los todos por prioridad
   const orderTodo =(arrayTodos)=>{
+    //con el metodo sort podemos ordenar elementos ya sea me menor a mayor o en su defecto de mayor a menor 
       return arrayTodos.sort((a,b)=>{
         // con cero indicamos que no cambiara el orden 
         if (a.prioridad === b.prioridad) return 0
